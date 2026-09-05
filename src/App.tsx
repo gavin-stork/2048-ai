@@ -1,17 +1,20 @@
+import { useState } from 'react';
 import { Board } from './components/Board'
 import { createEmptyBoard } from './game/board'
 import { spawnTile } from './game/spawn';
 import './App.css'
 
 function App() {
-  const board = createEmptyBoard();
-  const firstSpawn = spawnTile(board);
-  const secondSpawn = spawnTile(firstSpawn);
+  const [board, setBoard] = useState(() => {
+    const emptyBoard = createEmptyBoard();
+    const firstSpawn = spawnTile(emptyBoard);
+    return spawnTile(firstSpawn)
+  });
 
   return (
     <main>
       <h1>2048</h1>
-      <Board board={secondSpawn} />
+      <Board board={board} />
     </main>
   )
 }
