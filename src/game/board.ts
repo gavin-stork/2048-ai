@@ -1,10 +1,10 @@
 import type { Board } from "./types"
 
 export function createEmptyBoard(): Board {
-    return [
+  return [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
-    ];
+  ];
 }
