@@ -6,5 +6,5 @@ export function createEmptyBoard(): Board {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
-  ];
+  ]
 }

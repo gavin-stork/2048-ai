@@ -1,8 +1,8 @@
-export type Board = number[][];
+export type Board = number[][]
 
-export type Moves = "Up" | "Down" | "Left" | "Right";
+export type Moves = "Up" | "Down" | "Left" | "Right"
 
-export type Position = [number, number];
+export type Position = [number, number]
 
 export type MoveRowResult = {
     row: number[]

@@ -1,7 +1,7 @@
-import type { Board } from "../game/types";
+import type { Board } from "../game/types"
 
 interface BoardProps {
-  board: Board;
+  board: Board
 }
 
 export function Board(props: BoardProps) {

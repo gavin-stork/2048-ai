@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import { Board } from './components/Board'
 import { createEmptyBoard } from './game/board'
-import { spawnTile } from './game/spawn';
-import { moveLeft, moveRight, boardsEqual, moveUp, moveDown } from './game/moves';
+import { spawnTile } from './game/spawn'
+import { moveLeft, moveRight, boardsEqual, moveUp, moveDown } from './game/moves'
 import './App.css'
 
 function App() {
@@ -44,12 +44,12 @@ function App() {
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown)
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [board]);
+  }, [board])
 
   return (
     <main>

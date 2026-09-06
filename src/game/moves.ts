@@ -1,13 +1,13 @@
-import type { Board, MoveRowResult, MoveBoardResult } from "./types";
+import type { Board, MoveRowResult, MoveBoardResult } from "./types"
 
 function moveRowLeft(row: number[]): MoveRowResult {
-  let score = 0;
-  const filteredRow = row.filter(num => num !== 0);
+  let score = 0
+  const filteredRow = row.filter(num => num !== 0)
 
   for (let i = 0; i < filteredRow.length - 1; i++) {
     if (filteredRow[i] === filteredRow[i + 1]) {
-      filteredRow[i] *= 2;
-      filteredRow[i + 1] = 0;
+      filteredRow[i] *= 2
+      filteredRow[i + 1] = 0
       score += filteredRow[i]
     }
   }
@@ -18,7 +18,7 @@ function moveRowLeft(row: number[]): MoveRowResult {
     movedRow.push(0)
   }
 
-  return { row: movedRow, score: score};
+  return { row: movedRow, score: score}
 }
 
 function transpose(board: Board): Board {
@@ -32,10 +32,10 @@ function reverse(board: Board): Board {
 }
 
 export function moveLeft(board: Board): MoveBoardResult {
-  const results = board.map(row => moveRowLeft(row));
-  const movedBoard = results.map(result => result.row);
+  const results = board.map(row => moveRowLeft(row))
+  const movedBoard = results.map(result => result.row)
 
-  let score = 0;
+  let score = 0
   for (const result of results) {
     score += result.score
   }
@@ -45,7 +45,7 @@ export function moveLeft(board: Board): MoveBoardResult {
 export function moveRight(board: Board): MoveBoardResult {
   const reversedBoard = reverse(board)
   const results = reversedBoard.map(row => moveRowLeft(row))
-  const movedBoard = results.map(result => result.row);
+  const movedBoard = results.map(result => result.row)
 
   let score = 0
   for (const result of results) {
@@ -58,7 +58,7 @@ export function moveRight(board: Board): MoveBoardResult {
 export function moveUp(board: Board): MoveBoardResult {
   const transposedBoard = transpose(board)
   const results = transposedBoard.map(row => moveRowLeft(row))
-  const movedBoard = results.map(result => result.row);
+  const movedBoard = results.map(result => result.row)
 
   let score = 0
   for (const result of results) {
@@ -72,7 +72,7 @@ export function moveDown(board: Board): MoveBoardResult {
   const transposedBoard = transpose(board)
   const reversedBoard = reverse(transposedBoard)
   const results = reversedBoard.map(row => moveRowLeft(row))
-  const movedBoard = results.map(result => result.row);
+  const movedBoard = results.map(result => result.row)
 
   let score = 0
   for (const result of results) {
