@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Board } from './components/Board'
 import { createEmptyBoard } from './game/board'
 import { spawnTile } from './game/spawn'
-import { moveLeft, moveRight, boardsEqual, moveUp, moveDown } from './game/moves'
+import { moveLeft, moveRight, boardsEqual, moveUp, moveDown, isGameOver } from './game/moves'
 import './App.css'
 
 function App() {
@@ -15,6 +15,10 @@ function App() {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
+    if (isGameOver(board)) {
+      return;
+    }
+    
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
         const movedBoard = moveLeft(board)
@@ -46,6 +50,7 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown)
 
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
@@ -55,6 +60,7 @@ function App() {
     <main>
       <h1>2048</h1>
       <p>Score: {score}</p>
+      {isGameOver(board) && <p>Game Over!</p>}
       <Board board={board} />
     </main>
   )

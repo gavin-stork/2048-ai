@@ -92,3 +92,16 @@ export function boardsEqual(board1: Board, board2: Board): boolean {
   }
   return true
 }
+
+export function isGameOver(board: Board): boolean {
+  const left = moveLeft(board).board
+  const right = moveRight(board).board
+  const up = moveUp(board).board
+  const down = moveDown(board).board
+
+  return (
+    boardsEqual(left, board) && 
+    boardsEqual(right, board) && 
+    boardsEqual(up, board) && 
+    boardsEqual(down, board))
+}
