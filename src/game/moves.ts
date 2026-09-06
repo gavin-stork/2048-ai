@@ -19,15 +19,39 @@ function moveRowLeft(row: number[]): number[] {
   return movedRow;
 }
 
+function transpose(board: Board): Board {
+  const transposed = board.map((_, colIndex) => board.map(row => row[colIndex]))
+  return transposed
+}
+
+function reverse(board: Board): Board {
+  const reversed = board.map(row => [...row].reverse())
+  return reversed
+}
+
 export function moveLeft(board: Board): Board {
   const movedBoard = board.map(row => moveRowLeft(row))
   return movedBoard
 }
 
 export function moveRight(board: Board): Board {
-  const reversedBoard = board.map(row => [...row].reverse())
+  const reversedBoard = reverse(board)
   const movedBoard = reversedBoard.map(row => moveRowLeft(row))
-  return movedBoard.map(row => [...row].reverse())
+  return reverse(movedBoard)
+}
+
+export function moveUp(board: Board): Board {
+  const transposedBoard = transpose(board)
+  const movedBoard = transposedBoard.map(row => moveRowLeft(row))
+  return transpose(movedBoard)
+}
+
+export function moveDown(board: Board): Board {
+  const transposedBoard = transpose(board)
+  const reversedBoard = reverse(transposedBoard)
+  const movedBoard = reversedBoard.map(row => moveRowLeft(row))
+
+  return transpose(reverse(movedBoard))
 }
 
 export function boardsEqual(board1: Board, board2: Board): boolean {

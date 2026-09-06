@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Board } from './components/Board'
 import { createEmptyBoard } from './game/board'
 import { spawnTile } from './game/spawn';
-import { moveLeft, moveRight, boardsEqual } from './game/moves';
+import { moveLeft, moveRight, boardsEqual, moveUp, moveDown } from './game/moves';
 import './App.css'
 
 function App() {
@@ -21,6 +21,16 @@ function App() {
         }
       } else if (event.key === "ArrowRight") {
         const movedBoard = moveRight(board)
+        if (!boardsEqual(board, movedBoard)) {
+          setBoard(spawnTile(movedBoard))
+        }
+      } else if (event.key === "ArrowUp") {
+        const movedBoard = moveUp(board)
+        if (!boardsEqual(board, movedBoard)) {
+          setBoard(spawnTile(movedBoard))
+        }
+      } else if (event.key === "ArrowDown") {
+        const movedBoard = moveDown(board)
         if (!boardsEqual(board, movedBoard)) {
           setBoard(spawnTile(movedBoard))
         }
