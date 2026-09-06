@@ -10,7 +10,7 @@ export function Board(props: BoardProps) {
       {props.board.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((cell, colIndex) => (
-            <div className="cell" key={colIndex}>
+            <div className={`cell cell-${cell} ${cell !== 0 ? 'tile-pop' : ''}`} key={colIndex}>
               {cell === 0 ? '' : cell}
             </div>
           ))}
