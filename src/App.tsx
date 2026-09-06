@@ -18,7 +18,7 @@ function App() {
     if (isGameOver(board)) {
       return;
     }
-    
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
         const movedBoard = moveLeft(board)
@@ -56,11 +56,23 @@ function App() {
     }
   }, [board])
 
+  function newGame() {
+    const emptyBoard = createEmptyBoard()
+    const firstSpawn = spawnTile(emptyBoard)
+    const secondSpawn = spawnTile(firstSpawn)
+
+    setBoard(secondSpawn)
+    setScore(0)
+  }
+
+  const gameOver = isGameOver(board);
+
   return (
     <main>
       <h1>2048</h1>
       <p>Score: {score}</p>
-      {isGameOver(board) && <p>Game Over!</p>}
+      {gameOver && <p>Game Over!</p>}
+      {gameOver && <button onClick={newGame}>New Game</button>}
       <Board board={board} />
     </main>
   )
