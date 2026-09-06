@@ -7,32 +7,39 @@ import './App.css'
 
 function App() {
   const [board, setBoard] = useState(() => {
-    const emptyBoard = createEmptyBoard();
-    const firstSpawn = spawnTile(emptyBoard);
+    const emptyBoard = createEmptyBoard()
+    const firstSpawn = spawnTile(emptyBoard)
     return spawnTile(firstSpawn)
   });
+
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "ArrowLeft") {
         const movedBoard = moveLeft(board)
-        if (!boardsEqual(board, movedBoard)) {
-          setBoard(spawnTile(movedBoard))
+        if (!boardsEqual(board, movedBoard.board)) {
+          setBoard(spawnTile(movedBoard.board))
+          setScore(score => score + movedBoard.score)
         }
       } else if (event.key === "ArrowRight") {
         const movedBoard = moveRight(board)
-        if (!boardsEqual(board, movedBoard)) {
-          setBoard(spawnTile(movedBoard))
+        if (!boardsEqual(board, movedBoard.board)) {
+          setBoard(spawnTile(movedBoard.board))
+          setScore(score => score + movedBoard.score)
         }
       } else if (event.key === "ArrowUp") {
         const movedBoard = moveUp(board)
-        if (!boardsEqual(board, movedBoard)) {
-          setBoard(spawnTile(movedBoard))
+        if (!boardsEqual(board, movedBoard.board)) {
+          setBoard(spawnTile(movedBoard.board))
+          setScore(score => score + movedBoard.score)
+          
         }
       } else if (event.key === "ArrowDown") {
         const movedBoard = moveDown(board)
-        if (!boardsEqual(board, movedBoard)) {
-          setBoard(spawnTile(movedBoard))
+        if (!boardsEqual(board, movedBoard.board)) {
+          setBoard(spawnTile(movedBoard.board))
+          setScore(score => score + movedBoard.score)
         }
       }
     }
@@ -47,6 +54,7 @@ function App() {
   return (
     <main>
       <h1>2048</h1>
+      <p>Score: {score}</p>
       <Board board={board} />
     </main>
   )
