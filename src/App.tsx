@@ -4,6 +4,7 @@ import { createEmptyBoard } from './game/board'
 import { spawnTile } from './game/spawn'
 import { moveLeft, moveRight, boardsEqual, moveUp, moveDown, isGameOver } from './game/moves'
 import './App.css'
+import type { AnimationState } from './game/types'
 
 function App() {
   const [board, setBoard] = useState(() => {
@@ -14,40 +15,37 @@ function App() {
 
   const [score, setScore] = useState(0);
   const [moves, setMoves] = useState(0);
+  const [animation, setAnimation] = useState<AnimationState>(null)
 
   useEffect(() => {
     if (isGameOver(board)) {
+      setAnimation(null)
       return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (animation) {
+        return
+      }
       if (event.key === "ArrowLeft") {
         const movedBoard = moveLeft(board)
         if (!boardsEqual(board, movedBoard.board)) {
-          setBoard(spawnTile(movedBoard.board))
-          setScore(score => score + movedBoard.score)
-          setMoves(moves => moves += 1)
+          finishMove(movedBoard)
         }
       } else if (event.key === "ArrowRight") {
         const movedBoard = moveRight(board)
         if (!boardsEqual(board, movedBoard.board)) {
-          setBoard(spawnTile(movedBoard.board))
-          setScore(score => score + movedBoard.score)
-          setMoves(moves => moves += 1)
+          finishMove(movedBoard)
         }
       } else if (event.key === "ArrowUp") {
         const movedBoard = moveUp(board)
         if (!boardsEqual(board, movedBoard.board)) {
-          setBoard(spawnTile(movedBoard.board))
-          setScore(score => score + movedBoard.score)
-          setMoves(moves => moves += 1)
+          finishMove(movedBoard)
         }
       } else if (event.key === "ArrowDown") {
         const movedBoard = moveDown(board)
         if (!boardsEqual(board, movedBoard.board)) {
-          setBoard(spawnTile(movedBoard.board))
-          setScore(score => score + movedBoard.score)
-          setMoves(moves => moves += 1)
+          finishMove(movedBoard)
         }
       }
     }
@@ -58,7 +56,7 @@ function App() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [board])
+  }, [board, animation])
 
   function newGame() {
     const emptyBoard = createEmptyBoard()
@@ -68,6 +66,20 @@ function App() {
     setBoard(secondSpawn)
     setScore(0)
     setMoves(0)
+  }
+
+  function finishMove(movedBoard: ReturnType<typeof moveLeft>) {
+    setAnimation({
+      startBoard: board,
+      movements: movedBoard.movements
+    })
+
+    setTimeout(() => {
+      setBoard(spawnTile(movedBoard.board))
+      setScore(score => score + movedBoard.score)
+      setMoves(moves => moves + 1)
+      setAnimation(null)
+    }, 59)
   }
 
   const gameOver = isGameOver(board);
@@ -91,7 +103,7 @@ function App() {
           </div>
         </div>
       )}
-      <Board board={board} />
+      <Board board={board} animation={animation} />
     </main>
   )
 }
